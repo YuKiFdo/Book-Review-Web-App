@@ -1,101 +1,75 @@
 "use client";
-import { Star } from "lucide-react";
-import Link from "next/link";
 import Image from "next/image";
 import Navigation from "@/components/ui/custom/Navigation";
 import { useState, useEffect } from "react";
+import ReviewCard from "@/components/ui/custom/ReviewCard";
+import StarRating from "@/components/ui/custom/StarRating";
 
-interface ReviewProps {
-  author: string;
-  location?: string;
-  rating: number;
-  title: string;
-  content: string;
-  timeAgo: string;
-}
-
-function StarRating({ rating, size = 5 }: { rating: number; size?: number }) {
-  return (
-    <div className="flex flex-1 gap-1">
-      {[...Array(5)].map((_, i) => (
-        <Star
-          key={i}
-          className={`w-${size} h-${size} ${
-            i < rating ? "text-yellow-400" : "text-gray-200"
-          }`}
-          fill="currentColor"
-        />
-      ))}
-    </div>
-  );
-}
-
-function Review({
-  author,
-  location,
-  rating,
-  title,
-  content,
-  timeAgo,
-}: ReviewProps) {
-  return (
-    <div className="py-6 bg-white px-8 mb-5 rounded-lg divide-y divide-gray-200">
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <div className="w-14 h-14 bg-blue-200 rounded-full overflow-hidden">
-            <div className="w-full h-full bg-blue-100 flex items-center justify-center">
-              <span className="text-blue-600 font-semibold text-lg">
-                {author.charAt(0)}
-              </span>
-            </div>
-          </div>
-          <div>
-            <div className="flex items-start flex-col  mb-1">
-              <h3 className="font-semibold text-gray-900">{author}</h3>
-              {location && (
-                <div className="flex items-center gap-1">
-                  <Image
-                    src="https://cdn-icons-png.flaticon.com/512/1160/1160357.png"
-                    alt={`Location icon`}
-                    width={16}
-                    height={16}
-                  />
-                  <span className="text-sm text-gray-500">{location}</span>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-col ">
-        <div className="flex items-center gap-2 mt-4 mb-6">
-          <StarRating rating={rating} />
-          <span className="text-gray-600 ">{timeAgo}</span>
-        </div>
-        <h4 className="font-bold text-gray-900 mb-2">{title}</h4>
-        <p className="text-gray-600 leading-relaxed">{content}</p>
-      </div>
-    </div>
-  );
-}
+const reviews = [
+  {
+    id: "1",
+    author: "Shehal Herath",
+    location: "Sri Lanka",
+    rating: 4,
+    title: "Fun and Relatable!",
+    content:
+      "This is a funny and easy read. Greg's struggles with his older brother Rodrick are something many can relate to.",
+    timeAgo: "23h hours ago",
+    dateAdded: "2024-11-18",
+  },
+  {
+    id: "2",
+    author: "Jane Doe",
+    location: "United States",
+    rating: 5,
+    title: "Great Book!",
+    content:
+      "I love this book! It's hilarious and so relatable. The characters are well-developed, and the story is engaging.",
+    timeAgo: "3 days ago",
+    dateAdded: "2024-11-15",
+  },
+  {
+    id: "3",
+    author: "John Smith",
+    location: "Canada",
+    rating: 3,
+    title: "It was ok",
+    content:
+      "The book was okay. It had some funny moments, but overall, I didn't enjoy it as much as I thought I would.",
+    timeAgo: "1 week ago",
+    dateAdded: "2024-11-10",
+  },
+];
 
 export default function BookDetailPage() {
+  const [sortMethod, setSortMethod] = useState("rating");
+
+  const sortedReviews = [...reviews].sort((a, b) => {
+    if (sortMethod === "rating") {
+      return b.rating - a.rating; 
+    } else if (sortMethod === "dateAdded") {
+      return new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime();
+    }
+    return 0; 
+  });
+
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     setLoading(true);
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 500);
+    }, 200);
 
-    return () => clearTimeout(timer); 
-  }, []); 
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="min-h-screen">
       <Navigation />
       {loading && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
       {!loading && (
@@ -111,14 +85,14 @@ export default function BookDetailPage() {
               />
             </div>
 
-            <div className="md:col-span-9">
+            <div className="md:col-span-9 mt-11">
               <div className="mb-8">
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">
                   Diary of a Wimpy Kid
                 </h1>
                 <h2 className="text-xl text-gray-600 mb-4">Rodrick Rules</h2>
 
-                <div className="flex items-center gap-4 mb-6">
+                <div className="flex gap-3 mb-6">
                   <StarRating rating={5} size={5} />
                   <span className="text-gray-600">
                     5.00 <span className="text-gray-400">(1433)</span>
@@ -140,28 +114,31 @@ export default function BookDetailPage() {
             </div>
             <div className="md:col-span-12">
               <div className="flex justify-end mb-8">
+                <select
+                  className="px-4 py-2 border rounded-md"
+                  value={sortMethod}
+                  onChange={(e) => setSortMethod(e.target.value)}
+                >
+                  <option value="rating">Sort by Rating</option>
+                  <option value="dateAdded">Sort by Date Added</option>
+                </select>
                 <button className="px-6 py-4 bg-white text-blue-500 rounded-lg border border-blue-500 font-semibold hover:bg-blue-500 hover:text-white">
                   Write a review
                 </button>
               </div>
 
               <div className="">
-                <Review
-                  author="Shehal Herath"
-                  location="Sri Lanka"
-                  rating={4}
-                  title="Fun and Relatable!"
-                  content="This is a funny and easy read. Greg's struggles with his older brother Rodrick are something many can relate to. The book is full of laughs, and Greg's perspective on his family and school life is both entertaining and real. It's a great pick for anyone looking for a light, enjoyable story about growing up and family"
-                  timeAgo="23h hours ago"
-                />
-                <Review
-                  author="Jane Doe"
-                  location="United States"
-                  rating={5}
-                  title="Great Book!"
-                  content="I love this book! It's hilarious and so relatable. The characters are well-developed, and the story is engaging. I would recommend this book to anyone who enjoys a good laugh and a fun story."
-                  timeAgo="3 days ago"
-                />
+                {sortedReviews.map((review) => (
+                  <ReviewCard
+                    key={review.id}
+                    author={review.author}
+                    location={review.location}
+                    rating={review.rating}
+                    title={review.title}
+                    content={review.content}
+                    timeAgo={review.timeAgo}
+                  />
+                ))}
               </div>
             </div>
           </div>
