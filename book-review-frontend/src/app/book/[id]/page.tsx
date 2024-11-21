@@ -115,13 +115,14 @@ export default function BookDetailPage() {
             <div className="md:col-span-12">
               <div className="flex justify-end mb-8">
                 <select
-                  className="px-4 py-2 border rounded-md"
-                  value={sortMethod}
+                  className="px-3 py-2 border rounded-md mr-4"
+                  value={sortMethod} 
                   onChange={(e) => setSortMethod(e.target.value)}
                 >
                   <option value="rating">Sort by Rating</option>
                   <option value="dateAdded">Sort by Date Added</option>
                 </select>
+
                 <button className="px-6 py-4 bg-white text-blue-500 rounded-lg border border-blue-500 font-semibold hover:bg-blue-500 hover:text-white">
                   Write a review
                 </button>
