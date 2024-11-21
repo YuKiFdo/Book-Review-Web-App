@@ -1,16 +1,17 @@
-import { Star } from "lucide-react";
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import Image from "next/image";
+import StarRating from "./StarRating";
 
 interface BookCardProps {
   id: string;
   title: string;
   rating: number;
   coverImage: string;
+  totalRating?: number;
 }
 
-export default function BookCard({ id, title, rating, coverImage }: BookCardProps) {
+export default function BookCard({ id, title, rating, coverImage, totalRating }: BookCardProps) {
   return (
     <Link href={`/book/${id}`}>
       <Card className="overflow-hidden transition-all duration-200 hover:shadow-md">
@@ -27,15 +28,10 @@ export default function BookCard({ id, title, rating, coverImage }: BookCardProp
           <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
             {title}
           </h3>
-          <div className="flex text-yellow-400">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                className="w-4 h-4"
-                fill={i < rating ? "currentColor" : "none"}
-                strokeWidth={1.5}
-              />
-            ))}
+          <div className="flex text-yellow-400 gap-3">
+            <StarRating rating={rating} size={5} />
+            <span className="text-black font-semibold">{rating}.0</span>
+            <span className="text-gray-600" >({totalRating})</span>
           </div>
         </div>
       </Card>
