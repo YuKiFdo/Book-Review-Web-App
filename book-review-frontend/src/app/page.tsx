@@ -38,7 +38,7 @@ export default function HomePage() {
       <Navigation />
 
       <main className="max-w-7xl mx-auto px-4 py-8">
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 bg-white px-7 py-5 rounded-xl">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             Where Stories Meet Honest Reviews
           </h1>
@@ -53,6 +53,9 @@ export default function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <h2 className="col-span-full text-2xl font-bold text-gray-900 mb-4">
+            Top Rated Books
+          </h2>
           {loading ? (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center flex-col gap-3 justify-center">
               <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
