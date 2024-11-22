@@ -1,5 +1,8 @@
 package com.br.book_review_backend.Dto;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "tbl_books")
@@ -14,6 +17,18 @@ public class BookEntity {
     private String cover;
     private String averageRating;
     private String totalReviews;
+
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+    @JsonManagedReference  // Use @JsonManagedReference here
+    private List<ReviewsEntity> reviews;
+
+    public List<ReviewsEntity> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<ReviewsEntity> reviews) {
+        this.reviews = reviews;
+    }
 
 
     public String getAverageRating() {

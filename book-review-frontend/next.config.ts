@@ -24,7 +24,13 @@ module.exports = {
         hostname: 'www.pngall.com',
         port: '',
         pathname: '/**',
-      }
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.discordapp.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 }

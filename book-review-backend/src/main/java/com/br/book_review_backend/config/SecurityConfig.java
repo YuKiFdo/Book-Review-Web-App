@@ -38,6 +38,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/user/register").permitAll()
                 .requestMatchers(HttpMethod.GET, "/book").permitAll()
+                .requestMatchers(HttpMethod.GET, "/reviews/{bookId}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/reviews/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -53,7 +55,7 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-//                        .allowedOrigins("*")  // Allow all origins
+                        .allowedOrigins("http://localhost:3000")  // Allow all origins
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")  // Allow all HTTP methods
                         .allowedHeaders("*")  // Allow all headers
                         .allowCredentials(true);  // Allow credentials

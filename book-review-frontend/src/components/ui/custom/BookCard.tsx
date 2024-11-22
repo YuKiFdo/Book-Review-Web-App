@@ -6,14 +6,29 @@ import StarRating from "./StarRating";
 interface BookCardProps {
   id: string;
   title: string;
+  author: string;
   rating: number;
   coverImage: string;
-  totalRating?: number;
+  description: string;
+  totalReviews?: string;
 }
 
-export default function BookCard({ id, title, rating, coverImage, totalRating }: BookCardProps) {
+export default function BookCard({ id, title, author, rating, coverImage, description, totalReviews }: BookCardProps) {
+  rating = Number(rating);
+  const handleCardClick = () => {
+    const bookData = {
+      id,
+      title,
+      author,
+      rating,
+      coverImage,
+      description,
+      totalReviews,
+    };
+    sessionStorage.setItem("bookData", JSON.stringify(bookData)); 
+  };
   return (
-    <Link href={`/book/${id}`}>
+    <Link href={`/book/${id}`} onClick={handleCardClick}>
       <Card className="overflow-hidden transition-all duration-200 hover:shadow-md">
         <div className="p-4">
           <div className="aspect-[2/3] relative mb-4">
@@ -30,8 +45,8 @@ export default function BookCard({ id, title, rating, coverImage, totalRating }:
           </h3>
           <div className="flex text-yellow-400 gap-3">
             <StarRating rating={rating} size={5} />
-            <span className="text-black font-semibold">{rating}.0</span>
-            <span className="text-gray-600" >({totalRating})</span>
+            <span className="text-black font-semibold">{rating}</span>
+            <span className="text-gray-600" >({totalReviews})</span>
           </div>
         </div>
       </Card>

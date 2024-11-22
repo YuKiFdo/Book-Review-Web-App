@@ -7,11 +7,11 @@ export default function Navigation() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
-
     setIsAuthenticated(true);
   }, []); 
 
   const handleLogout = () => {
+    localStorage.removeItem('token');
     setIsAuthenticated(false); 
     setMenuOpen(false); 
   };
