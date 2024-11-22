@@ -80,7 +80,7 @@ export default function BookDetailPage() {
         return response.text
       })
       .then(() => {
-        const updatedReviews = reviews.filter((review) => review.id !== reviewId);
+        const updatedReviews = reviews.filter((review) => Number(review.id) !== reviewId);
         setReviews(updatedReviews);
         console.log("Review deleted successfully");
       })

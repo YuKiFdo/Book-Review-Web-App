@@ -50,6 +50,7 @@ export default function EditReviewPage() {
           setLoading(false);
         })
         .catch((err) => {
+          console.error(err);
           setError("Failed to load review");
           setLoading(false);
         });
