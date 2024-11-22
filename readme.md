@@ -40,6 +40,7 @@ This web application allows users to browse, review, and rate books. It includes
 - **Node.js**: For managing the frontend project dependencies.
 - **Visual Studio Code**: The primary IDE for development.
 - **IntelliJ IDEA**: For developing the Spring Boot backend.
+- **Docker**: For containerizing the backend application.
 
 ---
 
@@ -85,3 +86,26 @@ This web application allows users to browse, review, and rate books. It includes
 7. The backend server is now ready to serve requests.
 8. Note: The frontend is already configured to make requests to `http://localhost:8080`.
 
+
+#### Frontend
+1. Navigate to the `book-reviewrontend` directory.
+2. Run `npm install` to install the dependencies.
+3. Run `npm run dev` to start the Next.js development server.
+4. The frontend server will start at `http://localhost:3000`.
+5. Open the URL in your browser to access the web app.
+   
+
+### Docker
+
+1. Clone the repository.
+2. Run the following command to build the Docker image:
+   ```bash
+   docker build -t book-review-app .
+   ```
+3. Run the Docker container:
+   ```bash
+    docker run -p 8080:8080 book-review-app
+    ```
+
+4. The backend server will start inside the Docker container.
+5. The backend server will be accessible at `http://localhost:8080`.
