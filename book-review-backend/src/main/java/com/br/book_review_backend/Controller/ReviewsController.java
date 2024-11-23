@@ -27,15 +27,6 @@ public class ReviewsController {
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
-//    @GetMapping("/edit/{id}")
-//    public ResponseEntity<ReviewsEntity> getReviewById(@PathVariable Long id) {
-//        ReviewsEntity review = ReviewsRepo.findById(id).orElse(null);
-//        if (review == null) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity<>(review, HttpStatus.OK);
-//    }
-
     @GetMapping("/edit/{id}")
     public ResponseEntity<?> getReviewById(@PathVariable Long id) {
         ReviewsEntity review = ReviewsRepo.findById(id).orElse(null);
@@ -43,7 +34,6 @@ public class ReviewsController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        // Create a DTO to include bookId along with other review details
         ReviewResponseDto responseDto = new ReviewResponseDto(
                 review.getId(),
                 review.getAuthor(),
@@ -51,7 +41,7 @@ public class ReviewsController {
                 review.getContent(),
                 review.getRating(),
                 review.getDateAdded(),
-                review.getBook() != null ? review.getBook().getId() : null // Get bookId
+                review.getBook() != null ? review.getBook().getId() : null 
         );
 
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
